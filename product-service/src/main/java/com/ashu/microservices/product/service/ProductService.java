@@ -18,17 +18,17 @@ public class ProductService {
 
 
     public ProductResponseDTO createProduct(ProductRequestDTO requestDTO) {
-//        Product product = Product
-//                .builder()
-//                .name(requestDTO.name())
-//                .description(requestDTO.description())
-//                .price(requestDTO.price())
-//                .build();
+        Product product = Product
+                .builder()
+                .name(requestDTO.getName())
+                .description(requestDTO.getDescription())
+                .price(requestDTO.getPrice())
+                .build();
 
-        Product product = new Product();
-        product.setName(requestDTO.name());
-        product.setDescription(requestDTO.description());
-        product.setPrice(requestDTO.price());
+//        Product product = new Product();
+//        product.setName(requestDTO.name());
+//        product.setDescription(requestDTO.description());
+//        product.setPrice(requestDTO.price());
 
         Product savedProduct = productRepository.save(product);
 
