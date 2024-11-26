@@ -20,9 +20,9 @@ public class ProductService {
     public ProductResponseDTO createProduct(ProductRequestDTO requestDTO) {
         Product product = Product
                 .builder()
-                .name(requestDTO.getName())
-                .description(requestDTO.getDescription())
-                .price(requestDTO.getPrice())
+                .name(requestDTO.name())
+                .description(requestDTO.description())
+                .price(requestDTO.price())
                 .build();
 
 //        Product product = new Product();
