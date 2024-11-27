@@ -8,6 +8,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @Service
@@ -34,10 +36,16 @@ public class ProductService {
 
         log.info("product with id {} created successfully", savedProduct.getId());
 
-        return  new ProductResponseDTO(savedProduct.getId(), savedProduct.getName(),
-                        savedProduct.getDescription(), savedProduct.getPrice());
+        return new ProductResponseDTO(savedProduct.getId(), savedProduct.getName(),
+                savedProduct.getDescription(), savedProduct.getPrice());
 
 
+    }
 
+    public List<ProductResponseDTO> getAllProducts() {
+        return productRepository.findAll()
+                .stream()
+                .map(x -> new ProductResponseDTO(x.getId(), x.getName(), x.getDescription(), x.getPrice()))
+                .collect(Collectors.toList());
     }
 }
