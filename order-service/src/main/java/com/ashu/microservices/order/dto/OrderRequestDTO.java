@@ -1,4 +1,11 @@
 package com.ashu.microservices.order.dto;
 
-public record OrderRequestDTO() {
+import lombok.NoArgsConstructor;
+
+import java.math.BigDecimal;
+
+
+public record OrderRequestDTO( String skuCode,
+        BigDecimal price,
+        Integer quantity) {
 }
