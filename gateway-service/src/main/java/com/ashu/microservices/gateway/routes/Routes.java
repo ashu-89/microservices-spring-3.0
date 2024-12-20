@@ -7,9 +7,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
-import org.springframework.web.servlet.function.RequestPredicates;
-import org.springframework.web.servlet.function.RouterFunction;
-import org.springframework.web.servlet.function.ServerResponse;
+import org.springframework.web.servlet.function.*;
 
 import java.net.URI;
 
@@ -68,6 +66,8 @@ public class Routes {
                 .filter(setPath("/api-docs"))
                 .build();
     }
+
+
 
     @Bean
     public RouterFunction<ServerResponse> inventoryServiceRoute() {
