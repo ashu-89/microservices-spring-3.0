@@ -1,5 +1,6 @@
 package com.ashu.microservices.order.config;
 
+
 import com.ashu.microservices.order.client.InventoryClient;
 import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
 import org.apache.hc.client5.http.impl.classic.HttpClients;
