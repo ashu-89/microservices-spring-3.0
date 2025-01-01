@@ -30,8 +30,8 @@ public class OrderServiceImpl implements OrderService {
     KafkaTemplate<String, OrderPlacedEvent> kafkaTemplate;
 
     @Override
-//    public OrderResponseDTO createOrder(OrderRequestDTO orderRequestDTO) {
-    public void createOrder(OrderRequestDTO orderRequestDTO) {
+    public OrderResponseDTO createOrder(OrderRequestDTO orderRequestDTO) {
+//    public void createOrder(OrderRequestDTO orderRequestDTO) {
 
 
         if (!inventoryClient.checkInventory(orderRequestDTO.skuCode(), orderRequestDTO.quantity())) {
@@ -74,8 +74,8 @@ public class OrderServiceImpl implements OrderService {
 //
 
 
-//            return new OrderResponseDTO(order.getId(),
-//                    order.getOrderNumber(), order.getSkuCode(), order.getPrice(), order.getQuantity());
+            return new OrderResponseDTO(order.getId(),
+                    order.getOrderNumber(), order.getSkuCode(), order.getPrice(), order.getQuantity());
 
         }
     }
