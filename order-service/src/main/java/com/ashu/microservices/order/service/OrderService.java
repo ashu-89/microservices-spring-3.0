@@ -7,5 +7,7 @@ import org.springframework.stereotype.Service;
 
 //@Service
 public interface OrderService {
-    OrderResponseDTO createOrder(OrderRequestDTO orderRequestDTO);
+//    OrderResponseDTO createOrder(OrderRequestDTO orderRequestDTO);
+    void createOrder(OrderRequestDTO orderRequestDTO);
+
 }

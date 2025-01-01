@@ -30,7 +30,9 @@ public class OrderServiceImpl implements OrderService {
     KafkaTemplate<String, OrderPlacedEvent> kafkaTemplate;
 
     @Override
-    public OrderResponseDTO createOrder(OrderRequestDTO orderRequestDTO) {
+//    public OrderResponseDTO createOrder(OrderRequestDTO orderRequestDTO) {
+    public void createOrder(OrderRequestDTO orderRequestDTO) {
+
 
         if (!inventoryClient.checkInventory(orderRequestDTO.skuCode(), orderRequestDTO.quantity())) {
             throw new RuntimeException("Insufficient inventory");
@@ -45,15 +47,35 @@ public class OrderServiceImpl implements OrderService {
 
             //Send the message to kafka topic - orderNumber, emailId
             OrderPlacedEvent orderPlacedEvent = new OrderPlacedEvent(order.getOrderNumber(), orderRequestDTO.userDetails().email());
-            log.info(">>> Start - Sending order placed event {} to kafka topic order-placed", orderPlacedEvent);
-            kafkaTemplate.send("order-placed", orderPlacedEvent);
-            log.info("<<< End - Order placed event {} sent to kafka topic order-placed", orderPlacedEvent);
+//            log.info(">>> Start - Sending order placed event {} to kafka topic order-placed", orderPlacedEvent);
+//            kafkaTemplate.send("order-placed", orderPlacedEvent);
+//            log.info("<<< End - Order placed event {} sent to kafka topic order-placed", orderPlacedEvent);
 
 
             //
 
-            return new OrderResponseDTO(order.getId(),
-                    order.getOrderNumber(), order.getSkuCode(), order.getPrice(), order.getQuantity());
+//
+            try {
+                kafkaTemplate.send("order-placed", orderPlacedEvent)
+                        .whenComplete((result, ex) -> {
+                            if (ex != null) {
+                                log.error("Failed to send message: {}", ex.getMessage(), ex);
+                            } else {
+                                log.info("Message sent successfully to topic {}: {}",
+                                        result.getRecordMetadata().topic(),
+                                        result.getProducerRecord());
+                            }
+                        });
+            } catch (Exception e) {
+                log.error("Unexpected error while sending Kafka message: {}", e.getMessage(), e);
+            }
+
+
+//
+
+
+//            return new OrderResponseDTO(order.getId(),
+//                    order.getOrderNumber(), order.getSkuCode(), order.getPrice(), order.getQuantity());
 
         }
     }
