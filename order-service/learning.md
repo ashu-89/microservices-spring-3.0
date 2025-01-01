@@ -16,6 +16,6 @@ fallback method:
 
                         circuit not breaking, lol.
 
-    retry max-attempts=1 -> 
+    retry max-attempts=1 -> same as remove @Retry
                 
                         
