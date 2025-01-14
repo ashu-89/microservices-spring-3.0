@@ -25,15 +25,21 @@ public class NotificationService {
                 "has been placed successfully";
 
         String body = String.format("""
-                Dear Customer,
-                Your order with order number %s has been placed successfully.
+                Dear %s %s,
+                
+                Your order
+                with order number %s
+                has been placed successfully.
+                
                 Thank you for shopping with us.
                 
                 Best Regards,
                 Ashu's Shop
-                """, orderPlacedEvent.getOrderNumber());
+                """, orderPlacedEvent.getFirstName().toString(),
+                orderPlacedEvent.getLastName().toString(),
+                orderPlacedEvent.getOrderNumber().toString());
 
-        emailService.sendEmail(orderPlacedEvent.getEmail(),subject,body);
+        emailService.sendEmail(orderPlacedEvent.getEmail().toString(),subject,body);
 
 
         log.info("Notification for order number {} to email {} sent successfully",
