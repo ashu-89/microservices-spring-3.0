@@ -31,12 +31,3 @@ build/
 
 ### VS Code ###
 .vscode/
-
-### current project related ###
-.gitattributes
-.mvn/
-data/
-mvnw
-mvnw.cmd
-mysql/
-mysql/**

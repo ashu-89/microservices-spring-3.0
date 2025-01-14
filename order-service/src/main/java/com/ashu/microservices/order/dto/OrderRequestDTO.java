@@ -7,5 +7,9 @@ import java.math.BigDecimal;
 
 public record OrderRequestDTO( String skuCode,
         BigDecimal price,
-        Integer quantity) {
+        Integer quantity,
+        UserDetails userDetails) {
+
+    public record UserDetails(String email, String firstName, String lastName) {
+    }
 }
