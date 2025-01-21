@@ -40,3 +40,6 @@ mvnw
 mvnw.cmd
 mysql/
 mysql/**
+
+../gateway-service/docker/tempo/tempo-data/
+../gateway-service/docker/tempo/tempo-data/**
