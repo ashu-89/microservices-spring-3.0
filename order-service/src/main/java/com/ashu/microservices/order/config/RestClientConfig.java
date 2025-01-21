@@ -2,6 +2,8 @@ package com.ashu.microservices.order.config;
 
 
 import com.ashu.microservices.order.client.InventoryClient;
+import io.micrometer.observation.ObservationRegistry;
+import lombok.RequiredArgsConstructor;
 import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
 import org.apache.hc.client5.http.impl.classic.HttpClients;
 import org.apache.hc.core5.util.Timeout;
@@ -14,10 +16,13 @@ import org.springframework.web.client.support.RestClientAdapter;
 import org.springframework.web.service.invoker.HttpServiceProxyFactory;
 
 @Configuration
+@RequiredArgsConstructor
 public class RestClientConfig {
 
     @Value("${inventory.service.url}")
     private String inventoryServiceUrl;
+
+    private final ObservationRegistry observationRegistry;
 
     @Bean
     public InventoryClient inventoryClient() {
@@ -25,6 +30,7 @@ public class RestClientConfig {
                 .builder()
                 .baseUrl(inventoryServiceUrl)
                 .requestFactory(createHttpComponentsRequestFactory())
+                .observationRegistry(observationRegistry)
                 .build();
 
         var restClientAdapter = RestClientAdapter.create(restClient);

@@ -35,8 +35,10 @@ public class OrderServiceImpl implements OrderService {
 
 
         if (!inventoryClient.checkInventory(orderRequestDTO.skuCode(), orderRequestDTO.quantity())) {
+            log.info(">>> Service Start - Insufficient inventory for skuCode: {} and quantity: {}", orderRequestDTO.skuCode(), orderRequestDTO.quantity());
             throw new RuntimeException("Insufficient inventory");
         } else {
+            log.info(">>> Service Start - Creating order for skuCode: {} and quantity: {}", orderRequestDTO.skuCode(), orderRequestDTO.quantity());
             Order order = new Order();
             order.setOrderNumber(UUID.randomUUID().toString());
             order.setPrice(orderRequestDTO.price());
@@ -61,6 +63,7 @@ public class OrderServiceImpl implements OrderService {
 
 //
             try {
+                log.info(">>> Service KAFKA Start - Sending order placed event {} to kafka topic order-placed", orderPlacedEvent);
                 kafkaTemplate.send("order-placed", orderPlacedEvent)
                         .whenComplete((result, ex) -> {
                             if (ex != null) {
@@ -78,7 +81,7 @@ public class OrderServiceImpl implements OrderService {
 
 //
 
-
+            log.info("<<< Service End - Order created successfully for skuCode: {} and quantity: {}", orderRequestDTO.skuCode(), orderRequestDTO.quantity());
             return new OrderResponseDTO(order.getId(),
                     order.getOrderNumber(), order.getSkuCode(), order.getPrice(), order.getQuantity());
 
