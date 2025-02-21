@@ -24,6 +24,10 @@ public class RestClientConfig {
 
     private final ObservationRegistry observationRegistry;
 
+//    public RestClientConfig(ObservationRegistry observationRegistry) {
+//        this.observationRegistry = observationRegistry;
+//    }
+
     @Bean
     public InventoryClient inventoryClient() {
         RestClient restClient = RestClient

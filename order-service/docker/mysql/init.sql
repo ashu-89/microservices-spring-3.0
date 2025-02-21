@@ -1,1 +1,0 @@
-CREATE database IF NOT EXISTS `order_service`;
